@@ -1,0 +1,35 @@
+plugins {
+    id 'gradle-clojure.clojure' version '0.3.1'
+}
+
+repositories {
+    jcenter()
+    maven {
+        name = 'clojars'
+        url = 'https://clojars.org/repo/'
+    }
+
+}
+
+compileClojure {
+    options.aotCompile = true            // Defaults to false
+    options.copySourceSetToOutput = false   // Defaults to !aotCompile
+
+    options.reflectionWarnings {
+        enabled = true             // Defaults to false
+    }
+
+    // Compiler options for AOT
+    options.disableLocalsClearing = true                 // Defaults to false
+    options.elideMeta = ['doc', 'file', 'line', 'added'] // Defaults to []
+    options.directLinking = true                         // Defaults to false
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'org.clojure:clojure:1.8.0'
+    testCompile 'junit:junit:4.12'
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
